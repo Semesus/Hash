@@ -3,4 +3,4 @@ project(hw5)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(hw5 main.cpp Index.cpp Index.h HashFunction.cpp HashFunction.h HashTable.cpp HashTable.h)
+add_executable(hw5 main.cpp Index.cpp Index.h HashFunction.cpp HashFunction.h HashTable.cpp HashTable.h Entry.cpp Entry.h HashNode.h)
