@@ -7,12 +7,17 @@
 #include <string>
 #include <memory>
 
+struct Item {
+    int val_;
+    std::shared_ptr<std::string> key_;
+    std::shared_ptr<Item> next_;
+};
+
 class HashNode {
 private:
+    std::shared_ptr<Item> headPtr_;
 
-    int val_{};
-    std::shared_ptr<std::string> key_;
-    std::shared_ptr<HashNode> next_ = nullptr;
+    int length_;
 
 public:
     HashNode();
@@ -23,6 +28,14 @@ public:
 
     ~HashNode();
 
+    void insert(std::shared_ptr<Item>);
+
+    bool remove(std::shared_ptr<std::string>);
+
+    std::shared_ptr<Item> getKey(std::shared_ptr<std::string>);
+
+    void printList();
+    /*
     void setKey(std::shared_ptr<std::string>);
 
     void setVal(int);
@@ -36,7 +49,7 @@ public:
     std::shared_ptr<HashNode> getNext() const;
 
     void print();
-
+    */
 };
 
 

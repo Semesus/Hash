@@ -7,7 +7,9 @@
 
 #include <memory>
 
-class Entry;
+//class Entry;
+class LinkedList;
+class HashFunction;
 class HashTable;
 
 class Index {

@@ -3,14 +3,15 @@
 //
 
 #include "Index.h"
+#include "LinkedList.h"
+#include "HashFunction.h"
+#include "HashTable.h"
 
 Index::Index() {
-
+    HashTable(16);
 }
 
-Index::~Index() {
-
-}
+Index::~Index() = default;
 
 void Index::Insert(std::shared_ptr<std::string> &key, int val) {
 

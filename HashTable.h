@@ -8,21 +8,25 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <array>
 #include <memory>
-#include "HashNode.h"
+//#include "HashNode.h"
 
 //class Entry;
-class HashNode;
+//class HashNode;
+class LinkedList;
+class HashFunction;
 
 class HashTable {
 private:
     // vector of HashNode linked lists
-    std::vector<std::shared_ptr<HashNode>> vect_;
-    HashNode** headPtrs_;
+    //std::vector<std::shared_ptr<HashNode>> vect_;
+    //std::vector<std::list<HashNode>> vect_;
+    LinkedList* table_;
     // size of table
     int length_;
     // return location for given key
-    int hash(const std::shared_ptr<std::string>& key) const;
+    //int hash(const std::shared_ptr<std::string>& key) const;
 
 public:
     // ctor
@@ -34,17 +38,19 @@ public:
     void Insert(const std::shared_ptr<std::string>&, int);
 
     // is entry in table
-    bool Contains(std::shared_ptr<std::string>);
+    bool Contains(const std::shared_ptr<std::string>&);
 
     // find entry in index
-    int Get(std::shared_ptr<std::string>);
+    int Get(const std::shared_ptr<std::string>&) const;
 
     // remove entry form table by key
-    bool remove(std::shared_ptr<std::string>);
+    void Remove(const std::shared_ptr<std::string>&);
 
     void setLength(int);
 
-    int getLength();
+    int getLength() const;
+
+    int getNumItems();
 
     // print table for debugging
     void printTable();
