@@ -6,6 +6,7 @@
 #define HW5_INDEX_H
 
 #include <memory>
+#include "HashTable.h"
 
 //class Entry;
 class LinkedList;
@@ -15,7 +16,8 @@ class HashTable;
 class Index {
 private:
     //std::shared_ptr<Node> locate(std::shared_ptr<std::string>);
-
+    HashTable table_;
+    //std::shared_ptr<HashTable> head_;
 public:
     // public ctor
     Index();
@@ -29,6 +31,11 @@ public:
 
     // find an element in the index
     int Find(std::shared_ptr<std::string> &key);
+
+    // print table for debugging
+    void printTable();
+
+    void printHistogram();
 };
 
 

@@ -32,19 +32,23 @@ public:
     // ctor
     explicit HashTable(int);
 
+    HashTable();
+
     ~HashTable();
 
     // add entry to table
-    void Insert(const std::shared_ptr<std::string>&, int);
+    virtual void Insert(const std::shared_ptr<std::string>&, int);
 
     // is entry in table
-    bool Contains(const std::shared_ptr<std::string>&);
+    virtual bool Contains(const std::shared_ptr<std::string>&);
 
     // find entry in index
-    int Get(const std::shared_ptr<std::string>&) const;
+    virtual int Get(const std::shared_ptr<std::string>&) const;
 
     // remove entry form table by key
-    void Remove(const std::shared_ptr<std::string>&);
+    virtual void Remove(const std::shared_ptr<std::string>&);
+
+    virtual int getVal(const std::shared_ptr<std::string>&) const;
 
     void setLength(int);
 

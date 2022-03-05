@@ -44,6 +44,8 @@ public:
 
     std::shared_ptr<Item> getKey(const std::shared_ptr<std::string>&);
 
+    int getVal(const std::shared_ptr<std::string>& entry);
+
     int getLength() const;
 
     void printList();
