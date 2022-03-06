@@ -19,6 +19,8 @@ int HashFunction::Hash(const std::shared_ptr<std::string> &key, int length) {
         result += i;
     }
     return (result * key->length()) % length;
+    //return result % length;
+
 }
 
 

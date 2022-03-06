@@ -19,6 +19,7 @@ public:
     int compare(const std::shared_ptr<Item>&);
     int compare(const std::shared_ptr<std::string>&);
     std::shared_ptr<std::string> getKey();
+    // std::shared_ptr<std::string> getKey();
     int getVal() const;
     void setVal(int val);
     void setKey(std::shared_ptr<std::string> key);
@@ -44,7 +45,7 @@ public:
 
     std::shared_ptr<Item> getKey(const std::shared_ptr<std::string>&);
 
-    int getVal(const std::shared_ptr<std::string>& entry);
+    int getValue(const std::shared_ptr<std::string>& entry);
 
     int getLength() const;
 
