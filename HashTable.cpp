@@ -9,7 +9,7 @@
 #include "LinkedList.h"
 #include "HashFunction.h"
 
-int LENGTH = 10000;
+int LENGTH = 9973;
 
 HashTable::HashTable() {
     table_ = new LinkedList[LENGTH];
@@ -30,7 +30,7 @@ HashTable::~HashTable() {
 void HashTable::Insert(const std::shared_ptr<std::string>& key, int val) {
     int index = HashFunction::Hash(key, length_);
     std::shared_ptr<Item> newItem = std::make_shared<Item>(key, val);
-    table_[index-1].insert(newItem);
+    table_[index].insert(newItem);
     //std::shared_ptr<HashNode> newNode = std::make_shared<HashNode>(key, val);
     //vect_.insert(index, std::list<HashNode>.newNode);
 }
@@ -56,13 +56,13 @@ int HashTable::Get(const std::shared_ptr<std::string>& key) const {
 // TODO: case where val not in table
 int HashTable::getVal(const std::shared_ptr<std::string>& key) const{
     int index = HashFunction::Hash(key, length_);
-    int result = table_[index-1].getValue(key);
+    int result = table_[index].getValue(key);
     return result;
 }
 
 void HashTable::Remove(const std::shared_ptr<std::string>& key) {
     int index = HashFunction::Hash(key, length_);
-    table_[index-1].remove(key);
+    table_[index].remove(key);
 }
 
 void HashTable::printTable() {
@@ -136,7 +136,7 @@ bool LinkedList::remove(const std::shared_ptr<std::string>& entry) {
     std::shared_ptr<Item> curr = headPtr_;
     std::shared_ptr<Item> prev = curr;
     while(curr) {
-        if(curr->compare(entry) == 0) {
+        if((curr != headPtr_) && curr->compare(entry) == 0) {
             prev->next_ = curr->next_;
             curr.reset();
             nodeLength_--;
@@ -165,6 +165,9 @@ int LinkedList::getValue(const std::shared_ptr<std::string>& entry) {
     std::shared_ptr<Item> curr = headPtr_;
     //std::string data = *entry;
     //std::shared_ptr<Item> prev = curr;
+    if(curr == nullptr) {
+        return -1;
+    }
     while(curr) {
         //prev = curr;
         //if((curr != headPtr_) && curr->key_ == entry) {

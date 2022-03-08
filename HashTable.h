@@ -23,6 +23,7 @@ private:
     //std::vector<std::shared_ptr<HashNode>> vect_;
     //std::vector<std::list<HashNode>> vect_;
     LinkedList* table_;
+    //std::shared_ptr<LinkedList> table_;
     // size of table
     int length_;
     // return location for given key
