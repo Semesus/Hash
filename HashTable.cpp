@@ -17,8 +17,6 @@ HashTable::HashTable() {
 }
 
 HashTable::HashTable(int length) {
-    //vect_.reserve(length);
-    //length_ = length;
     table_ = new LinkedList[length];
     length_ = length;
 }
@@ -29,15 +27,18 @@ HashTable::~HashTable() {
 
 void HashTable::Insert(const std::shared_ptr<std::string>& key, int val) {
     int index = HashFunction::Hash(key, length_);
+    //if(Contains(key)) {
+    //    return;
+    //}
     std::shared_ptr<Item> newItem = std::make_shared<Item>(key, val);
     table_[index].insert(newItem);
-    //std::shared_ptr<HashNode> newNode = std::make_shared<HashNode>(key, val);
-    //vect_.insert(index, std::list<HashNode>.newNode);
 }
 
 bool HashTable::Contains(const std::shared_ptr<std::string>& key) {
     int index = HashFunction::Hash(key, length_);
-    if(table_[index-1].getKey(key)) {
+    if(table_[index].getKey(key)) {
+        //TODO: remove before submission
+        std::cout << "duplicate caught" << std::endl;
         return true;
     } else {
         return false;
@@ -47,7 +48,7 @@ bool HashTable::Contains(const std::shared_ptr<std::string>& key) {
 // TODO: case where val not in table
 int HashTable::Get(const std::shared_ptr<std::string>& key) const {
     int index = HashFunction::Hash(key, length_);
-    return index-1;
+    return index;
     // if contains key
         //return index
     //return table_[index].getKey(key);
@@ -85,6 +86,11 @@ void HashTable::printHistogram() {
     }
 }
 
+void HashTable::printNumItems() {
+    std::cout << "\n\nHash Table Contains ";
+    std::cout << getNumItems() << " Items total.\n";
+}
+
 void HashTable::setLength(int len) {
     length_ = len;
 }
@@ -107,11 +113,6 @@ LinkedList::LinkedList() {
     nodeLength_ = 0;
 }
 
-//HashNode::HashNode(std::shared_ptr<std::string> key, int val) : key_(std::move(key)), val_(val) {}
-
-//HashNode::HashNode(std::shared_ptr<std::string> key, int val, std::shared_ptr<HashNode> next) :
-//        key_(std::move(key)), val_(val), next_(std::move(next)) {}
-
 void LinkedList::insert(std::shared_ptr<Item> newEntry) {
     if(!headPtr_->next_) {
         headPtr_->next_ = std::move(newEntry);
@@ -120,11 +121,20 @@ void LinkedList::insert(std::shared_ptr<Item> newEntry) {
     }
     std::shared_ptr<Item> curr = headPtr_;
     std::shared_ptr<Item> prev = curr;
-    while(curr) {
+    while(curr->next_) {
         prev = curr;
-        curr = prev->next_;
+        curr = curr->next_;
+        if((curr != headPtr_) && curr->compare(newEntry->key_) == 0) {
+            std::shared_ptr<Item> temp = curr;
+            if(curr->next_) {
+                prev->next_ = curr->next_;
+            }
+            curr = curr->next_;
+            temp.reset();
+            nodeLength_--;
+        }
     }
-    prev->next_ = newEntry;
+    curr->next_ = newEntry;
     newEntry->next_ = nullptr;
     nodeLength_++;
 }
@@ -137,48 +147,43 @@ bool LinkedList::remove(const std::shared_ptr<std::string>& entry) {
     std::shared_ptr<Item> prev = curr;
     while(curr) {
         if((curr != headPtr_) && curr->compare(entry) == 0) {
-            prev->next_ = curr->next_;
+            if(curr->next_) {
+                prev->next_ = curr->next_;
+            }
             curr.reset();
             nodeLength_--;
             return true;
         }
         prev = curr;
-        curr = prev->next_;
+        curr = curr->next_;
     }
     return false;
 }
 
-std::shared_ptr<Item> LinkedList::getKey(const std::shared_ptr<std::string>& entry) {
-    std::shared_ptr<Item> curr = headPtr_;
-    //std::shared_ptr<Item> prev = curr;
+bool LinkedList::getKey(const std::shared_ptr<std::string>& entry) {
+    std::shared_ptr<Item> curr = headPtr_->next_;
     while(curr) {
-        //prev = curr;
-        if((curr != headPtr_) && curr->key_ == entry) {
-            return curr;
+        if(curr->compare(entry) == 0) {
+            return true;
         }
         curr = curr->next_;
     }
-    return nullptr;
+    return false;
 }
 
 int LinkedList::getValue(const std::shared_ptr<std::string>& entry) {
-    std::shared_ptr<Item> curr = headPtr_;
-    //std::string data = *entry;
-    //std::shared_ptr<Item> prev = curr;
+    std::shared_ptr<Item> curr = headPtr_->next_;
     if(curr == nullptr) {
         return -1;
     }
     while(curr) {
-        //prev = curr;
-        //if((curr != headPtr_) && curr->key_ == entry) {
-        if((curr != headPtr_) && curr->compare(entry) == 0) {
+        if(curr->compare(entry) == 0) {
             return curr->val_;
         }
         curr = curr->next_;
     }
     return -1;
 }
-
 
 void LinkedList::printList() {
     if(nodeLength_ == 0) {
@@ -243,37 +248,3 @@ std::shared_ptr<std::string> Item::getKey() {
 int Item::getVal() const {
     return val_;
 }
-
-
-
-/*
-HashNode::~HashNode() = default;
-
-void HashNode::setNext(std::shared_ptr<HashNode> next) {
-    next_ = std::move(next);
-}
-
-std::shared_ptr<HashNode> HashNode::getNext() const {
-    return next_;
-}
-
-void HashNode::print() {
-
-}
-
-void HashNode::setKey(std::shared_ptr<std::string> key) {
-    key_ = std::move(key);
-}
-
-void HashNode::setVal(int val) {
-    val_ = val;
-}
-
-std::shared_ptr<std::string> HashNode::getKey() {
-    return key_;
-}
-
-int HashNode::getVal() {
-    return val_;
-}
-*/

@@ -17,6 +17,24 @@
 class LinkedList;
 class HashFunction;
 
+struct Item {
+    friend class HashTable;
+private:
+    int val_;
+    std::shared_ptr<std::string> key_;
+    std::shared_ptr<Item> next_;
+public:
+    Item();
+    Item(std::shared_ptr<std::string>, int);
+    int compare(const std::shared_ptr<Item>&);
+    int compare(const std::shared_ptr<std::string>&);
+    std::shared_ptr<std::string> getKey();
+    // std::shared_ptr<std::string> getKey();
+    int getVal() const;
+    void setVal(int val);
+    void setKey(std::shared_ptr<std::string> key);
+};
+
 class HashTable {
 private:
     // vector of HashNode linked lists
@@ -61,6 +79,8 @@ public:
     void printTable();
 
     void printHistogram();
+
+    void printNumItems();
 
 };
 

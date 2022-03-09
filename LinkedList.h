@@ -43,7 +43,7 @@ public:
 
     bool remove(const std::shared_ptr<std::string>&);
 
-    std::shared_ptr<Item> getKey(const std::shared_ptr<std::string>&);
+    bool getKey(const std::shared_ptr<std::string>&);
 
     int getValue(const std::shared_ptr<std::string>& entry);
 

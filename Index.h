@@ -36,6 +36,12 @@ public:
     void printTable();
 
     void printHistogram();
+
+    void printNumItems();
+
+    void printVal(std::shared_ptr<std::string>);
+
+    int printHash(std::shared_ptr<std::string>);
 };
 
 
