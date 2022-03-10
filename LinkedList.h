@@ -23,6 +23,7 @@ public:
     int getVal() const;
     void setVal(int val);
     void setKey(std::shared_ptr<std::string> key);
+    void clear();
 };
 
 class LinkedList {
